@@ -1,0 +1,43 @@
+#!/bin/bash
+#name=Sleep for the night
+#description=Run taks before going to sleep for the night
+#arrayStarted=true
+
+echo -e "\n--------------------------------------------------------------------------\n"
+
+run_backup () {
+    TODAY_BCK=$(find /mnt/user/backups/appdata -mtime -1 -type f)
+    if [ -z "$TODAY_BCK" ]; then
+        echo "No backup today"
+        echo "[Running backup...]"
+        time /usr/local/emhttp/plugins/ca.backup2/scripts/backup.php
+        echo -e "\n[done]\n"
+    else
+        echo -e "A backup has already been running\n"
+    fi
+}
+
+run_mover () {
+    echo "[Call the Mover]"
+    time /usr/local/sbin/mover
+    echo -e "[done]\n"
+}
+
+notify () {
+    echo "[Notify]"
+    export SUBJECT="User Scripts"
+    export DESCRIPTION="Sleep for the night... 😴"
+    bash /boot/config/plugins/dynamix/notifications/agents/Telegram.sh
+    echo -e "\n[done]\n"
+}
+
+go_to_sleep () {
+    echo "Going to sleep..."
+    php /usr/local/emhttp/plugins/dynamix.s3.sleep/include/SleepMode.php
+}
+
+# Main
+run_backup
+run_mover
+notify
+go_to_sleep

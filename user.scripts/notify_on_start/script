@@ -1,0 +1,8 @@
+#!/bin/bash
+#name=Notify on starup
+#description=Send a Telegram notification on array starup
+#arrayStarted=false
+
+export SUBJECT="User Scripts"
+export DESCRIPTION="Server has woke up... ⏰"
+bash /boot/config/plugins/dynamix/notifications/agents/Telegram.sh

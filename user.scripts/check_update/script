@@ -1,0 +1,7 @@
+#!/bin/bash
+#name=Check updates
+#description=Check for updates for both applications and dokcer images
+#arrayStarted=true
+
+/usr/local/emhttp/plugins/ca.update.applications/scripts/updateDocker.php
+/usr/local/emhttp/plugins/ca.update.applications/scripts/updateApplications.php

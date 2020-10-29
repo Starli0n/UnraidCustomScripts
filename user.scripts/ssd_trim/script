@@ -1,0 +1,6 @@
+#!/bin/bash
+#name=SSD TRIM
+#description=Run SSD TRIM operations
+#arrayStarted=true
+
+/sbin/fstrim -a -v

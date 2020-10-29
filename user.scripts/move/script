@@ -1,0 +1,6 @@
+#!/bin/bash
+#name=Move
+#description=Move will immediately invoke the Mover
+#arrayStarted=true
+
+/usr/local/sbin/mover

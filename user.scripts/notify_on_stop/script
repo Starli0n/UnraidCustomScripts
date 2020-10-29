@@ -1,0 +1,8 @@
+#!/bin/bash
+#name=Notify on stop
+#description=Send a Telegram notification on array stop
+#arrayStarted=true
+
+export SUBJECT="User Scripts"
+export DESCRIPTION="Server is sleeping... 😴"
+bash /boot/config/plugins/dynamix/notifications/agents/Telegram.sh

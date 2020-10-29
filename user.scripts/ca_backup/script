@@ -1,0 +1,6 @@
+#!/bin/bash
+#name=CA Backup
+#description=Perform a backup task
+#arrayStarted=true
+
+/usr/local/emhttp/plugins/ca.backup2/scripts/backup.php
