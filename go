@@ -3,6 +3,10 @@
 # Run at boot
 # Should be called by /boot/config/go
 
+# Custom /root
+cat /boot/config/custom/.bash_profile >> /root/.bash_profile
+touch /root/go.done
+
 # Activate WOL
 ethtool -s eth0 wol g
 
@@ -13,8 +17,15 @@ ethtool -s eth0 wol g
 cp /boot/config/custom/docker-compose /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
-touch /root/go.done
+# Runner - https://github.com/stylemistake/runner
+mkdir -p /usr/local/completion
+cp /boot/config/custom/runner/src/cli.sh /usr/local/src/cli.sh
+cp /boot/config/custom/runner/src/runner.sh /usr/local/src/runner.sh
+cp /boot/config/custom/runner/completion/runner.bash /usr/local/completion/runner.bash
+cp /boot/config/custom/runner/bin/runner /usr/local/bin/runner
+chmod +x /usr/local/bin/runner
 
+# Notify
 export SUBJECT="go"
 export DESCRIPTION="Boot... 🤖"
 bash /boot/config/plugins/dynamix/notifications/agents/Telegram.sh

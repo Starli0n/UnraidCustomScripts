@@ -24,11 +24,16 @@ install-docker-compose () {
     cp /usr/local/bin/docker-compose /boot/config/custom/docker-compose
 }
 
+install-runner () {
+    git clone https://github.com/stylemistake/runner
+}
+
 install () {
     install-go
     install-ssh
     install-user-scripts
     install-docker-compose
+    install-runner
 }
 
 install
