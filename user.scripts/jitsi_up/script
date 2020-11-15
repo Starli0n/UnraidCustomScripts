@@ -1,0 +1,7 @@
+#!/bin/bash
+#name=Jitsi > Start
+#description=Starting Jitsi Videoconferencing and messaging software
+#arrayStarted=true
+
+cd /mnt/user/Home/Projets/src/github.com/jitsi/docker-jitsi-meet
+/usr/local/bin/docker-compose -f docker-compose.yml -f etherpad.yml up -d
