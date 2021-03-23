@@ -5,6 +5,10 @@ if [ -f /home/coder/.bash_profile ]; then
     . /home/coder/.bash_profile
 fi
 
+if [ -f /home/coder/.bash_vscode ]; then
+    . /home/coder/.bash_vscode
+fi
+
 alias appdata='cd /mnt/user/appdata'
 alias custom='cd /boot/config/custom'
 alias plugins='cd /boot/config/plugins'

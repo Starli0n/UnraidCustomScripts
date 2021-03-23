@@ -11,8 +11,11 @@ usermod -aG docker coder    # Add to docker group
 # Custom profiles
 cat /boot/config/custom/profiles/profile >> /etc/profile
 cat /boot/config/custom/profiles/root.bash_profile >> /root/.bash_profile
+cp /boot/config/custom/profiles/.gitconfig /root/.gitconfig
 cp /boot/config/custom/profiles/user.bash_profile /home/coder/.bash_profile
+cp /boot/config/custom/profiles/user.bashrc /home/coder/.bashrc
 cp /boot/config/custom/profiles/.bash_git /home/coder/.bash_git
+cp /boot/config/custom/profiles/.gitconfig /home/coder/.gitconfig
 chown -R coder:coders /home/coder
 touch /root/go.done
 
