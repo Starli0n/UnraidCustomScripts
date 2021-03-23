@@ -6,11 +6,18 @@ install-go () {
 	cat ../go
 }
 
+install-git-prompt () {
+    curl -L https://raw.github.com/git/git/master/contrib/completion/git-prompt.sh > /boot/config/custom/profiles/.bash_git
+}
+
 install-ssh () { # /etc/rc.d/rc.sshd restart
     echo "Copy public keys to /boot/config/ssh/root/authorized_keys file"
     touch /boot/config/ssh/root/authorized_keys # --> /root/.ssh/authorized_keys
     echo "Backup /etc/ssh/sshd_config -->> /boot/config/ssh/sshd_config"
     cp /etc/ssh/sshd_config /boot/config/ssh/sshd_config.bak
+    echo "SSH plugin for user: https://github.com/docgyver/unraid-v6-plugins"
+    mkdir -p /boot/config/plugins/ssh/coder/.ssh
+    cp /boot/config/ssh/root/authorized_keys /boot/config/plugins/ssh/coder/.ssh/authorized_keys
 }
 
 install-user-scripts () {
@@ -30,6 +37,7 @@ install-runner () {
 
 install () {
     install-go
+    install-git-prompt
     install-ssh
     install-user-scripts
     install-docker-compose

@@ -1,0 +1,7 @@
+
+### /boot/config/custom/profiles/profile
+
+if [ "$USER" != "root" ]; then
+    export HOME=/home/$USER
+    cd $HOME
+fi

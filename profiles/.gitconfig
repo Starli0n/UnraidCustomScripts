@@ -1,0 +1,156 @@
+[user]
+	name = Starli0n
+	email = Starli0n@users.noreply.github.com
+[core]
+	editor = code --wait
+	#pager = cat # Prevent keypress from log command or use git --no-pager
+[http]
+	sslverify = false
+	#proxy = "http://user:pass@proxy.com:port"
+	#sslCAinfo = ca-bundle.crt
+[color]
+	ui = true
+[diff]
+	tool = gitools
+[difftool]
+	prompt = false
+[difftool "gitools"]
+	cmd = ~/.gitools.sh difftool \"$LOCAL\" \"$REMOTE\" local
+[difftool "dtcached"]
+	cmd = ~/.gitools.sh difftool \"$LOCAL\" \"$REMOTE\" cached
+[difftool "sublime"]
+	cmd = ~/.gitools.sh sublime \"$LOCAL\" \"$REMOTE\"
+[merge]
+	tool = gitools
+	ff = only
+[mergetool]
+	prompt = false
+[mergetool "gitools"]
+	trustExitCode = true
+	cmd = ~/.gitools.sh mergetool \"$LOCAL\" \"$REMOTE\" \"$BASE\" \"$MERGED\"
+[include]
+	path = ~/.gitconfig.id
+[alias]
+	h = help
+	g = "!cat ~/.gitconfig" # Show me
+	cfg = config -e # Edit local config
+	gcfg = config --global -e # Edit global config
+	scfg = config --system -e # Edit global config
+
+	whoami = "!git config user.name; git config user.email"
+	gwhoami = "!git config --global user.name; git config --global user.email"
+
+	rep = "!$GIT_OPEN_URL `git config remote.origin.url`"
+	repu = "!$GIT_OPEN_URL `git config remote.upstream.url`"
+	s = "!~/.gitools.sh shell" # Use git shell [@PARAMS]
+	alias = "!git config --get-regexp alias | cut -c 7-"
+
+	up = remote add upstream # Add forked repo with all branches @URL
+	upm = remote add --track master upstream # Add forked repo @URL
+
+	ll = log --pretty=oneline --color --abbrev-commit --graph --decorate --first-parent # Smart log current branch
+	lm = log --pretty=oneline --color --abbrev-commit --graph --decorate --first-parent origin/master
+	la = log --pretty=oneline --color --abbrev-commit --graph --decorate --all # Smart log
+	llx = !git --no-pager log --pretty=oneline --abbrev-commit --decorate -1 # Show the commit of the @SHA
+	llh = !git --no-pager log --pretty=oneline --abbrev-commit --decorate -1 HEAD
+	llm = !git --no-pager log --pretty=oneline --abbrev-commit --decorate -1 master
+	llo = !git --no-pager log --pretty=oneline --abbrev-commit --decorate -1 origin/master
+	llu = !git --no-pager log --pretty=oneline --abbrev-commit --decorate -1 upstream/master
+	llf = "!~/.gitools.sh logfeature" # Log Merged feature of @SHA
+	last = log -1 HEAD # Last log
+
+	get = rev-parse --short # Get short @SHA (ex: git get HEAD~1)
+	f = "!git ls-files | grep -i" # Find path of @filename
+
+	unstage = reset HEAD -- # Stage (green) to Modified (red) status @filename
+	us = reset HEAD --
+	discard = checkout -- # Modified (red) to Unmodified (-) status @filename
+	dd = checkout --
+	a = add # Modified (red) to Stage (green) status @filename [@filenamebis]
+	cp = cherry-pick # Pick the commit with @SHA
+
+	undo = reset --soft HEAD~
+	redo = reset --soft ORIG_HEAD
+	pop = reset --mixed HEAD~
+	hpop = reset --hard HEAD~
+	hreset = reset --hard
+	hresetom = reset --hard origin/master
+
+	fix = rebase -i HEAD~2 # Rebase the two last commits
+	st = status
+
+	co = checkout
+	com = checkout master
+	cob = checkout -b # New @FEATURE_NAME (or git checkout -b slave origin/slave)
+	coh = checkout HEAD --
+
+	br = branch
+	brd = branch -d # Delete @BRANCH_NAME
+	bra = branch -a # Show all branches
+	rt = remote # Show remote branches
+
+	ci = commit
+	cim = commit -m # Commit with a command line message "@Message"
+	ciam = commit -am # Commit and add with a command line message "@Message"
+	cia = commit --amend # Amend last commit
+	cian = commit --amend --no-edit # Amend last commit without changing message
+	ciaa = commit --amend --author # Amend last commit author "@user.name <user.email>"
+
+	sh = stash # Backup current modifications
+	shi = stash --patch # Interactive mode
+	shl = stash list # List saved modifications
+	shp = stash pop # Pop last modification
+	shd = !sh -c 'git stash drop stash@{$1}' - # Drop @STASH_ID
+	shs = stash save # Save @STASH_NAME
+	sha = !sh -c 'git stash apply stash@{$1}' - # Apply @STASH_ID
+
+	ft = fetch
+	ftu = fetch upstream master
+	fta = fetch --all --prune
+	fts = submodule update --remote # Fetch submodule
+	sft = "!git fetch --all && git submodule update --remote" # Super fetch
+
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbu = rebase upstream/master
+
+	mg = merge --ff-only
+	mgffo = merge --ff-only
+	mgu = merge upstream/master --ff-only
+	po = push origin master # Push local commits to remote repository branch @BRANCH_NAME
+	pom = push origin master # Push local commits to remote repository
+	pomf = push origin master --force # Force push
+	pum = push upstream master # Push local commits to upstream repository
+	pumf = push upstream master --force # Force push local commits to upstream repository
+	pogp = push origin gh-pages # Push to GitHub pages
+	pogpf = push origin gh-pages --force # Force push to GitHub pages
+	pom1 = push origin HEAD~1:master # Push commit except the last one
+	pomf1 = push origin HEAD~1:master --force # Force push commit except the last one
+	puo = push -u origin # Push branch @BRANCH_NAME
+	pup = push -u origin gh-pages
+	pupf = push -u origin gh-pages --force
+	pod = push origin --delete # Delete remote branch @BRANCH_NAME
+
+	dt = difftool # (1) Diff between Staged and Modified or (2) [@OLDER_SHA @NEWER_SHA]
+	dtc = difftool --cached --tool=dtcached # Diff between Repo and Staged
+	sub = difftool --tool=sublime # (1) Add modified files to Sublime Text
+	subc = difftool --cached --tool=sublime # (1) Add staged files to Sublime Text
+	dtr = !sh -c 'git difftool $1~1 $1' - # Diff a specific revision @SHA
+	dts = submodule foreach 'git difftool' # Submodule version
+	dtcs = submodule foreach 'git difftool --cached' # Submodule version
+	sdt = "!git difftool --cached && git submodule foreach 'git difftool --cached'" # Super difftool
+	sdtc = "!git difftool --cached && git submodule foreach 'git difftool --cached'" # Super difftool cached
+	dtl = difftool HEAD~1 HEAD # Diff between the two last commits
+	dtll = difftool --name-only # List of filename diff between @OLDER_SHA @NEWER_SHA
+	dtlll = difftool --name-only HEAD~1 HEAD # List of filename diff between the two last commits
+	mt = mergetool # File to merge @filename
+
+	cleanu = clean -f -d # Delete untracked files and directory
+	cleani = clean -f -d -X # Delete ignored files and directory
+	cleanall = clean -f -d -x # Delete untracked and ignored files and directory
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
