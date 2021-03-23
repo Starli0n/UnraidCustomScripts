@@ -119,3 +119,12 @@ alias dcd='docker-compose down' # => docker-compose -f docker-compose.yml -f doc
 alias dcup='docker-compose -f docker-compose.yml -f production.yml up'
 alias dcdp='docker-compose -f docker-compose.yml -f production.yml down'
 complete -F _docker_compose dc
+
+### extra
+EXTRA=/mnt/user/coder/.extra
+if [ -f $EXTRA  ]; then
+    alias extra='vc $EXTRA'
+    alias reload='source $EXTRA && echo $EXTRA'
+
+    . /mnt/user/coder/.extra
+fi
