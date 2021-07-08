@@ -1,0 +1,36 @@
+#!/bin/bash
+#name=Gitlab Backup
+#description=Create a backup of the Gitlab instance
+#arrayStarted=true
+
+BASEDIR=/boot/config/plugins/user.scripts/scripts/gitlab_backup
+
+if [ -f $BASEDIR/.env ]; then
+    . $BASEDIR/.env
+else
+    echo "$BASEDIR/.env not found !!"
+    echo "Create .env file and set those variables:"
+    echo "GITLAB_CONTAINER"
+    echo "BACKUP_SRV_HOST"
+    echo "BACKUP_SRV_PORT"
+    echo "BACKUP_SRV_USR"
+    echo "BACKUP_SRV_PATH"
+    echo "BACKUP_SRV_RETENTION_DAYS"
+    echo "BACKUP_RETENTION_DAYS"
+    exit 1
+fi
+
+cd /mnt/user/appdata/gitlab-ce/data/backups
+
+echo -e "Create backup: Begin at `date`\n" | tee backup.log
+/usr/bin/docker exec -t ${GITLAB_CONTAINER} gitlab-rake gitlab:backup:create > >(tee -a backup.log) 2> >(tee -a backup.log >&2)
+echo -e "\nEnd at `date`" | tee -a backup.log
+
+echo "Synchronize backups with remote server"
+/usr/bin/rsync -a -e "ssh -p ${BACKUP_SRV_PORT}" . ${BACKUP_SRV_USR}@${BACKUP_SRV_HOST}:${BACKUP_SRV_PATH}
+
+echo "Clean local backups older than ${BACKUP_RETENTION_DAYS} days"
+find . -name "*.tar" -mtime +${BACKUP_RETENTION_DAYS} -delete
+
+echo "Clean remote backups older than ${BACKUP_SRV_RETENTION_DAYS} days"
+ssh -p ${BACKUP_SRV_PORT} ${BACKUP_SRV_USR}@${BACKUP_SRV_HOST} "find ${BACKUP_SRV_PATH} -name \"*.tar\" -mtime +${BACKUP_SRV_RETENTION_DAYS} -delete"
