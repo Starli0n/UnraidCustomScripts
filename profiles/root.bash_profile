@@ -1,5 +1,5 @@
 
-### /boot/config/custom/.bash_profile
+### /boot/config/custom/profiles/root.bash_profile
 
 if [ -f /home/coder/.bash_profile ]; then
     . /home/coder/.bash_profile

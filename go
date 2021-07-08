@@ -7,16 +7,27 @@
 groupadd coders             # Add coders group
 usermod -g coders coder     # Change coder primary group
 usermod -aG docker coder    # Add to docker group
+usermod -aG docker starli0n
+usermod -aG coders starli0n
 
 # Custom profiles
 cat /boot/config/custom/profiles/profile >> /etc/profile
+# root
 cat /boot/config/custom/profiles/root.bash_profile >> /root/.bash_profile
 cp /boot/config/custom/profiles/.gitconfig /root/.gitconfig
+# coder
 cp /boot/config/custom/profiles/user.bash_profile /home/coder/.bash_profile
 cp /boot/config/custom/profiles/user.bashrc /home/coder/.bashrc
 cp /boot/config/custom/profiles/.bash_git /home/coder/.bash_git
 cp /boot/config/custom/profiles/.gitconfig /home/coder/.gitconfig
 chown -R coder:coders /home/coder
+chmod 644 /home/coder/.bash_*
+# starli0n
+cp /boot/config/custom/profiles/root.bash_profile /home/starli0n/.bash_profile
+cp /boot/config/custom/profiles/user.bashrc /home/starli0n/.bashrc
+cp /boot/config/custom/profiles/.bash_git /home/starli0n/.bash_git
+cp /boot/config/custom/profiles/.gitconfig /home/starli0n/.gitconfig
+chown -R starli0n:users /home/starli0n
 touch /root/go.done
 
 # Activate WOL

@@ -1,6 +1,6 @@
 ### /boot/config/custom/profiles/user.bash_profile
 
-export SRC_DIR="/mnt/user/coder"
+export SRC_DIR="/mnt/cache/coder"
 export EDITOR='code'
 export GIT_EDITOR='$EDITOR -r -w'
 
@@ -15,6 +15,7 @@ alias g='git'
 alias vc='$EDITOR -r'
 alias pvc='_pvc(){ "$@" | $EDITOR -r -; }; _pvc'
 alias src='cd $SRC_DIR'
+alias reload='exec $SHELL -l'
 
 # Runner - https://github.com/stylemistake/runner
 eval $(runner --completion=bash)
@@ -121,10 +122,8 @@ alias dcdp='docker-compose -f docker-compose.yml -f production.yml down'
 complete -F _docker_compose dc
 
 ### extra
-EXTRA=/mnt/user/coder/.extra
+EXTRA=$SRC_DIR/.extra
 if [ -f $EXTRA  ]; then
     alias extra='vc $EXTRA'
-    alias reload='source $EXTRA && echo $EXTRA'
-
-    . /mnt/user/coder/.extra
+    . $EXTRA
 fi
