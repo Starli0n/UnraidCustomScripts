@@ -13,6 +13,7 @@ usermod -aG coders starli0n
 # Custom profiles
 cat /boot/config/custom/profiles/profile >> /etc/profile
 # root
+cp /boot/config/custom/profiles/user.bashrc /root/.bashrc
 cat /boot/config/custom/profiles/root.bash_profile >> /root/.bash_profile
 cp /boot/config/custom/profiles/.gitconfig /root/.gitconfig
 # coder
