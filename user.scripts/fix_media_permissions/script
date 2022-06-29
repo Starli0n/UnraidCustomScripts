@@ -1,0 +1,6 @@
+#!/bin/bash
+#name=Fix Media Permissions
+#description=This script will fix the permissions of the Media shared folder
+#arrayStarted=true
+
+chown -R starli0n:users /mnt/user/Media
